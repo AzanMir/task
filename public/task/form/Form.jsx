@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 export default function Form() {
+  const navigate = useNavigate();
+  const { id } = useParams(); // Get the ID from URL parameters
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     description: "",
   });
+
+  // Fetch existing data when editing
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        const response = await fetch(
+          `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`
+        );
+        const data = await response.json();
+        setFormData(data);
+      };
+      fetchData();
+    }
+  }, [id]);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -14,23 +32,31 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      "https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+
+    // Check if we're editing (id exists) or creating new
+    const url = id
+      ? `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`
+      : "https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground";
+
+    const method = id ? "PUT" : "POST";
+
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
     const data = await response.json();
     console.log("Response:", data);
+
+    // Navigate back to home after successful submission
+    navigate("/");
   };
 
   return (
     <div>
-      <h1>Form</h1>
+      <h1>{id ? "Edit Form" : "Form"}</h1>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -68,7 +94,10 @@ export default function Form() {
           name="description"
           placeholder="Description"
         ></textarea>
-        <input type="submit" />
+        <input type="submit" value={id ? "Update" : "Submit"} />
+        <button type="button" onClick={() => navigate("/")}>
+          Cancel
+        </button>
       </form>
     </div>
   );
