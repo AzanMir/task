@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Form from "../public/task/form/Form";
-import Home from "../public/task/home/Home";
-import Navbar from "../public/task/navbar/Navbar";
+import Home from "./task/home/Home";
+import Form from "./task/form/Form";
+import Navbar from "./task/navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
