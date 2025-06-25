@@ -27,7 +27,15 @@ export default function Home() {
       }
     );
     if (response.ok) {
-      toast.success("Data deleted successfully!");
+      toast.success("Data Deleted successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       fetchData();
     }
 

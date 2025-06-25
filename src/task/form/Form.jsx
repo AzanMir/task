@@ -49,9 +49,25 @@ export default function Form() {
     console.log("Response:", data);
 
     if (id) {
-      toast.success("Data updated successfully!");
+      toast.success("Data updated successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     } else {
-      toast.success("Data added successfully!");
+      toast.success("Data Added successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     }
     navigate("/");
   };
