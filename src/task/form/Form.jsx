@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Form() {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ export default function Form() {
     description: "",
   });
 
-  // Fetch existing data when editing
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
@@ -32,8 +32,6 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if we're editing (id exists) or creating new
     const url = id
       ? `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`
       : "https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground";
@@ -50,7 +48,11 @@ export default function Form() {
     const data = await response.json();
     console.log("Response:", data);
 
-    // Navigate back to home after successful submission
+    if (id) {
+      toast.success("Data updated successfully!");
+    } else {
+      toast.success("Data added successfully!");
+    }
     navigate("/");
   };
 

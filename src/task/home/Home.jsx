@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -25,11 +26,16 @@ export default function Home() {
         method: "DELETE",
       }
     );
+    if (response.ok) {
+      toast.success("Data deleted successfully!");
+      fetchData();
+    }
+
     setApiData(apiData.filter((item) => item.id !== id));
   };
 
   const handleEdit = async (id) => {
-    navigate(`/form/${id}`); // Navigate to form with the ID
+    navigate(`/form/${id}`);
   };
 
   return (
