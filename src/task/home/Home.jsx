@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Pencil, SquarePlus, Trash2 } from "lucide-react";
 import {
   Table,
   TableHeader,
@@ -68,10 +69,11 @@ export default function Home() {
           className="bg-gray-500 p-1 px-3 rounded-2xl text-white hover:bg-green-600 cursor-pointer"
           onClick={() => navigate("/form")}
         >
+          <SquarePlus />
           Add New
         </Button>
         <div className="p-4">
-          <Table>
+          <Table className="cursor-default">
             <TableRow className="text-2xl">
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
@@ -90,12 +92,14 @@ export default function Home() {
                       className="bg-gray-500 p-1 px-3 rounded-2xl text-white hover:bg-lime-600 cursor-pointer"
                       onClick={() => handleEdit(tabon.id)}
                     >
+                      <Pencil />
                       Edit
                     </Button>
                     <Button
                       className="bg-gray-500 p-1 px-3 rounded-2xl text-white ml-2 hover:bg-red-600 cursor-pointer"
                       onClick={() => handleDel(tabon.id)}
                     >
+                      <Trash2 />
                       Delete
                     </Button>
                   </TableCell>

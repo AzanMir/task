@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Input } from "../../ui/Input";
 import { Textarea } from "../../ui/TextArea";
 import { Button } from "../../ui/Button";
+import { Send, TimerReset, Ban } from "lucide-react";
 import {
   fetchFormSuccess,
   submitFormSuccess,
@@ -139,16 +140,19 @@ export default function Form() {
           name="description"
           placeholder="Description"
         ></Textarea>
-        <Input
-          className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50"
+        <Button
+          className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50 border-1"
           type="submit"
-          value={id ? "Update" : "Submit"}
-        />
+        >
+          <Send />
+          {id ? "Update" : "Submit"}
+        </Button>
         <Button
           className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50 border-1"
           type="button"
           onClick={handleReset}
         >
+          <TimerReset />
           Reset
         </Button>
         <Button
@@ -156,6 +160,7 @@ export default function Form() {
           type="button"
           onClick={() => navigate("/")}
         >
+          <Ban />
           Cancel
         </Button>
       </form>
