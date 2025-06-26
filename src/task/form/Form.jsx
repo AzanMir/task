@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Input } from "../../ui/Input";
+import { Textarea } from "../../ui/TextArea";
+import { Button } from "../../ui/Button";
 import {
   fetchFormSuccess,
   submitFormSuccess,
   updateForm,
+  resetForm,
 } from "../../reducers/FormReducer";
 
 export default function Form() {
@@ -34,6 +38,10 @@ export default function Form() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(updateForm({ [name]: value }));
+  };
+
+  const handleReset = () => {
+    dispatch(resetForm());
   };
 
   const handleSubmit = async (e) => {
@@ -85,11 +93,14 @@ export default function Form() {
   };
 
   return (
-    <div>
-      <h1>{id ? "Edit Form" : "Form"}</h1>
+    <div className="p-8 flex items-center justify-center flex-col">
+      <h1 className="text-5xl font-medium">
+        {id ? "Edit Details" : "  Login"}
+      </h1>
       <form
         onSubmit={handleSubmit}
         style={{
+          alignItems: "center",
           display: "flex",
           flexDirection: "column",
           width: "300px",
@@ -97,37 +108,56 @@ export default function Form() {
           gap: 30,
         }}
       >
-        <input
+        <Input
+          className="w-[300px]"
           onChange={handleChange}
           value={formData.name || ""}
           name="name"
           placeholder="name"
           type="text"
         />
-        <input
+        <Input
+          className="w-[300px]"
           onChange={handleChange}
           value={formData.email || ""}
           name="email"
           placeholder="email"
           type="email"
         />
-        <input
+        <Input
+          className="w-[300px]"
           onChange={handleChange}
           value={formData.phone || ""}
           name="phone"
           placeholder="number"
           type="number"
         />
-        <textarea
+        <Textarea
+          className="w-[300px]"
           onChange={handleChange}
           value={formData.description || ""}
           name="description"
           placeholder="Description"
-        ></textarea>
-        <input type="submit" value={id ? "Update" : "Submit"} />
-        <button type="button" onClick={() => navigate("/")}>
+        ></Textarea>
+        <Input
+          className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50"
+          type="submit"
+          value={id ? "Update" : "Submit"}
+        />
+        <Button
+          className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50 border-1"
+          type="button"
+          onClick={handleReset}
+        >
+          Reset
+        </Button>
+        <Button
+          className="cursor-pointer w-[300px] hover:bg-black hover:text-amber-50 border-1"
+          type="button"
+          onClick={() => navigate("/")}
+        >
           Cancel
-        </button>
+        </Button>
       </form>
     </div>
   );

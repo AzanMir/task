@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "../../ui/table";
+import { Button } from "../../ui/Button";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -27,7 +37,7 @@ export default function Home() {
       const response = await fetch(
         `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`,
         {
-          method: "DELETE",
+          meTableHeadod: "DELETE",
         }
       );
       if (response.ok) {
@@ -36,9 +46,9 @@ export default function Home() {
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
+          pauseOnHover: TableRowue,
+          draggable: TableRowue,
+          TableHeademe: "colored",
         });
         setApiData(apiData.filter((item) => item.id !== id));
       }
@@ -53,122 +63,47 @@ export default function Home() {
 
   return (
     <div>
-      <div>
-        <h1>Table</h1>
-        <button onClick={() => navigate("/form")}>Add New</button>
-        <table
-          style={{
-            padding: "45px",
-            border: "2px solid",
-          }}
+      <div className="p-8">
+        <Button
+          className="bg-gray-500 p-1 px-3 rounded-2xl text-white hover:bg-green-600 cursor-pointer"
+          onClick={() => navigate("/form")}
         >
-          <thead>
-            <tr>
-              <th
-                style={{
-                  padding: "25px",
-                  border: "2px solid",
-                }}
-              >
-                Name
-              </th>
-              <th
-                style={{
-                  padding: "25px",
-                  border: "2px solid",
-                }}
-              >
-                Email
-              </th>
-              <th
-                style={{
-                  padding: "25px",
-                  border: "2px solid",
-                }}
-              >
-                Phone
-              </th>
-              <th
-                style={{
-                  padding: "25px",
-                  border: "2px solid",
-                }}
-              >
-                Action 1
-              </th>
-              <th
-                style={{
-                  padding: "25px",
-                  border: "2px solid",
-                }}
-              >
-                Action 2
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {apiData.map((tabon) => (
-              <tr key={tabon.id}>
-                <td
-                  style={{
-                    padding: "5px",
-                    border: "2px solid",
-                  }}
-                >
-                  {tabon.name}
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    border: "2px solid",
-                  }}
-                >
-                  {tabon.email}
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    border: "2px solid",
-                  }}
-                >
-                  {tabon.phone}
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    border: "2px solid",
-                  }}
-                >
-                  <button
-                    onClick={() => handleEdit(tabon.id)}
-                    style={{
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    border: "2px solid",
-                  }}
-                >
-                  <button
-                    onClick={() => handleDel(tabon.id)}
-                    style={{
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          Add New
+        </Button>
+        <div className="p-4">
+          <Table>
+            <TableRow className="text-2xl">
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+
+            <TableBody>
+              {apiData.map((tabon) => (
+                <TableRow key={tabon.id}>
+                  <TableCell>{tabon.name}</TableCell>
+                  <TableCell>{tabon.email}</TableCell>
+                  <TableCell>{tabon.phone}</TableCell>
+                  <TableCell>
+                    <Button
+                      className="bg-gray-500 p-1 px-3 rounded-2xl text-white hover:bg-lime-600 cursor-pointer"
+                      onClick={() => handleEdit(tabon.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="bg-gray-500 p-1 px-3 rounded-2xl text-white ml-2 hover:bg-red-600 cursor-pointer"
+                      onClick={() => handleDel(tabon.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

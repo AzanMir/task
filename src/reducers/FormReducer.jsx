@@ -20,9 +20,12 @@ const formSlice = createSlice({
     submitFormSuccess(state, action) {
       return { ...state, ...action.payload };
     },
+    resetForm() {
+      return initialState;
+    },
   },
 });
 
-export const { updateForm, fetchFormSuccess, submitFormSuccess } =
+export const { updateForm, fetchFormSuccess, submitFormSuccess, resetForm } =
   formSlice.actions;
 export default formSlice.reducer;
