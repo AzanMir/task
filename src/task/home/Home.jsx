@@ -93,14 +93,12 @@ export default function Home() {
                       onClick={() => handleEdit(tabon.id)}
                     >
                       <Pencil />
-                      Edit
                     </Button>
                     <Button
                       className="bg-gray-500 p-1 px-3 rounded-2xl text-white ml-2 hover:bg-red-600 cursor-pointer"
                       onClick={() => handleDel(tabon.id)}
                     >
                       <Trash2 />
-                      Delete
                     </Button>
                   </TableCell>
                 </TableRow>
