@@ -1,33 +1,39 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  fetchFormSuccess,
+  submitFormSuccess,
+  updateForm,
+} from "../../reducers/FormReducer";
 
 export default function Form() {
   const navigate = useNavigate();
-  const { id } = useParams(); // Get the ID from URL parameters
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    description: "",
-  });
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const formData = useSelector((state) => state.form);
 
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
-        const response = await fetch(
-          `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`
-        );
-        const data = await response.json();
-        setFormData(data);
+        try {
+          const response = await fetch(
+            `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`
+          );
+          const data = await response.json();
+          dispatch(fetchFormSuccess(data));
+        } catch (error) {
+          console.error("Fetch error:", error);
+        }
       };
       fetchData();
     }
-  }, [id]);
+  }, [id, dispatch]);
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    dispatch(updateForm({ [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -38,38 +44,44 @@ export default function Form() {
 
     const method = id ? "PUT" : "POST";
 
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await response.json();
-    console.log("Response:", data);
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log("Response:", data);
 
-    if (id) {
-      toast.success("Data updated successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-      });
-    } else {
-      toast.success("Data Added successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-      });
+      dispatch(submitFormSuccess(data));
+
+      if (id) {
+        toast.success("Data updated successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      } else {
+        toast.success("Data Added successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      }
+      navigate("/");
+    } catch (error) {
+      console.error("Submit error:", error);
     }
-    navigate("/");
   };
 
   return (
@@ -87,28 +99,28 @@ export default function Form() {
       >
         <input
           onChange={handleChange}
-          value={formData.name}
+          value={formData.name || ""}
           name="name"
           placeholder="name"
           type="text"
         />
         <input
           onChange={handleChange}
-          value={formData.email}
+          value={formData.email || ""}
           name="email"
           placeholder="email"
           type="email"
         />
         <input
           onChange={handleChange}
-          value={formData.phone}
+          value={formData.phone || ""}
           name="phone"
           placeholder="number"
           type="number"
         />
         <textarea
           onChange={handleChange}
-          value={formData.description}
+          value={formData.description || ""}
           name="description"
           placeholder="Description"
         ></textarea>
