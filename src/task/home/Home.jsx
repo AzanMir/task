@@ -38,7 +38,7 @@ export default function Home() {
       const response = await fetch(
         `https://68554dfe6a6ef0ed66320ddd.mockapi.io/playground/${id}`,
         {
-          meTableHeadod: "DELETE",
+          method: "DELETE",
         }
       );
       if (response.ok) {
@@ -47,8 +47,8 @@ export default function Home() {
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
-          pauseOnHover: TableRowue,
-          draggable: TableRowue,
+          pauseOnHover: True,
+          draggable: True,
           TableHeademe: "colored",
         });
         setApiData(apiData.filter((item) => item.id !== id));
