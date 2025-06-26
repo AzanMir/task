@@ -12,6 +12,18 @@ import {
   TableCell,
 } from "../../ui/table";
 import { Button } from "../../ui/Button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/Dialog";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -65,13 +77,20 @@ export default function Home() {
   return (
     <div>
       <div className="p-8">
-        <Button
-          className="bg-gray-500 p-1 px-3 rounded-2xl text-white hover:bg-green-600 cursor-pointer"
-          onClick={() => navigate("/form")}
-        >
-          <SquarePlus />
-          Add New
-        </Button>
+        <Dialog>
+          <DialogTrigger className="flex bg-gray-500 p-2 px-3 rounded-2xl text-white hover:bg-lime-600 cursor-pointer">
+            <SquarePlus className="mr-[4px]" /> Add New
+          </DialogTrigger>
+          <DialogContent className="bg-white">
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
         <div className="p-4">
           <Table className="cursor-default">
             <TableRow className="text-2xl">
