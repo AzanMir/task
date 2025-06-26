@@ -55,7 +55,7 @@ export default function Home() {
     <div>
       <div>
         <h1>Table</h1>
-
+        <button onClick={() => navigate("/form")}>Add New</button>
         <table
           style={{
             padding: "45px",
